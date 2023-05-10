@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="bean.Medecin" table="medecins">
+        <id name="idMedecin" column="id_med" type="int">
+            <generator class="identity" />
+        </id>
+        
+        <property name="codeMed" column="code_med" type ="string" not-null="true" />
+        <property name="nom" column="nom_med" type="string" not-null="true" />
+        <property name="prenom" column="prenom_med" type="string" not-null="true" />
+        <property name="grade" column="grade_med" type="string" not-null="true" />
+    </class>
+    
+</hibernate-mapping>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+
+    <class name="bean.Patient" table="patients">
+        <id name="idPat" column="id_patient" type="int">
+            <generator class="identity" />
+        </id>
+        
+        <property name="codePat" column="code_patient" type="string" not-null="true" />
+        <property name="nomPat" column="nom_patient" type="string" not-null="true" />
+        <property name="prenomPat" column="prenom_patient" type="string" not-null="true" />
+        <property name="sexe" column="sexe_patient" type="string" not-null="true" />
+        <property name="adresse" column="adresse_patient" type="string" not-null="true" />
+    </class>
+    
+</hibernate-mapping>
+
+
