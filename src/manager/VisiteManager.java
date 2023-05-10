@@ -2,6 +2,7 @@
 package manager;
 
 import bean.Visite;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -37,7 +38,7 @@ public class VisiteManager {
             session.save(v);
             session.flush();
             transaction.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }           
     }
