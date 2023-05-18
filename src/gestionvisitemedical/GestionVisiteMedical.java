@@ -5,6 +5,7 @@ import bean.Medecin;
 import bean.Patient;
 import bean.Visite;
 import java.util.Date;
+import java.util.List;
 import manager.MedecinManager;
 import manager.PatientManager;
 import manager.VisiteManager;
@@ -21,6 +22,11 @@ public class GestionVisiteMedical {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+/*        MedecinManager medecinManager = new MedecinManager();
+        List<Medecin> medecins = medecinManager.getAllMedecin();
+        for (Medecin medecin : medecins) {
+            System.out.println(medecin.getNom() + "" + medecin.getPrenom());
+        }*/
 //        MedecinManager medecinManager = new MedecinManager();
 //        PatientManager patientManager = new PatientManager();
 
@@ -59,7 +65,7 @@ public class GestionVisiteMedical {
     
     patientManager.modifiePatient(patientToUpdate);*/
         
-        HibernateUtil.sessionFactory.close();
+  
     }
     
 }
