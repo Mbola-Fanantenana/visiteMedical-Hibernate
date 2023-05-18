@@ -11,8 +11,15 @@
             <generator class="identity" />
         </id>
         
-        <property name="codeMed" column="code_med" type="string" not-null="true" />
-        <property name="codePat" column="code_pat" type="string" not-null="true" />
+    <!--    <many-to-one name="medecin" class="bean.Medecin" fetch="select" cascade="delete">
+            <column name="code_med" not-null="true" />
+        </many-to-one>
+        <many-to-one name="patient" class="bean.Patient" fetch="select" cascade="delete">
+            <column name="code_pat" not-null="true" />
+        </many-to-one> -->
+        
+        <property name="codeMedVisite" column="code_med_visite" type="string" not-null="true" />
+        <property name="codePatVisite" column="code_pat_visite" type="string" not-null="true" />
         <property name="dateVisite" column="date_visite" type="date" not-null="true" />
     </class>
     
