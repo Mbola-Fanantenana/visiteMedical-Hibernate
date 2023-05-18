@@ -9,17 +9,17 @@ import java.util.Date;
  */
 public class Visite {
     private int idVisite;
-    private String codeMed;
-    private String codePat;
+    private String codeMedVisite;
+    private String codePatVisite;
     private Date dateVisite;
     
     public Visite() {}
     
-    public Visite(int idVisite, String codeMed, String codePat, Date dateVisite) {
+    public Visite(int idVisite, String codeMedVisite, String codePatVisite, Date dateVisite) {
         super();
         this.idVisite = idVisite;
-        this.codeMed = codeMed;
-        this.codePat = codePat;
+        this.codeMedVisite = codeMedVisite;
+        this.codePatVisite = codePatVisite;
         this.dateVisite = dateVisite;
     }
     
@@ -30,18 +30,18 @@ public class Visite {
         this.idVisite = idVisite;
     }
     
-    public String getCodeMed() {
-        return codeMed;
+    public String getCodeMedVisite() {
+        return codeMedVisite;
     }
-    public void setCodeMed(String codeMed) {
-        this.codeMed = codeMed;
+    public void setCodeMedVisite(String codeMedVisite) {
+        this.codeMedVisite = codeMedVisite;
     }
     
-    public String getCodePat() {
-        return codePat;
+    public String getCodePatVisite() {
+        return codePatVisite;
     }
-    public void setCodePat(String codePat) {
-        this.codePat = codePat;
+    public void setCodePatVisite(String codePatVisite) {
+        this.codePatVisite = codePatVisite;
     }
     
     public Date getDateVisite() {

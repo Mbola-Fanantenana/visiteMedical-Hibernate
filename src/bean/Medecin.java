@@ -17,10 +17,11 @@ public class Medecin {
     private String grade;
     
 
-public Medecin () {}
+public Medecin () {
+    super();
+}
 
 public Medecin (int idMedecin ,String codeMed, String nom, String prenom, String grade) {
-    super();
     this.idMedecin = idMedecin;
     this.codeMed = codeMed;
     this.nom = nom;

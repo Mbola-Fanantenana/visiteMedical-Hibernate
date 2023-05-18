@@ -13,10 +13,11 @@ public class Patient {
     private String sexe;
     private String adresse;
     
-    public Patient() {}
+    public Patient() {
+        super();
+    }
     
     public Patient(int idPat, String codePat, String nomPat, String prenomPat, String sexe, String adresse) {
-        super();
         this.idPat = idPat;
         this.codePat = codePat;
         this.nomPat = nomPat;
