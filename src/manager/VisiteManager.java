@@ -2,9 +2,12 @@
 package manager;
 
 import bean.Visite;
+import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 /**
@@ -14,7 +17,7 @@ import util.HibernateUtil;
 public class VisiteManager {
     
     public Visite getVisiteById(int idVisite) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Visite visite = null;
         
         try {
@@ -25,14 +28,31 @@ public class VisiteManager {
         return visite;
     }
     
-    public void ajoutVisite(Visite visite) {
+    public List<Visite> getAllVisite() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.getTransaction();
+        //Transaction transaction = null;
+        List<Visite> visites = null;
+            
+        try {
+            session.beginTransaction();
+            String req = "FROM Visite";
+            Query query = session.createQuery(req);
+            visites = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return visites;
+    }
+    
+    public void ajoutVisite(Visite visite) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
         
         try {
             Visite v = new Visite();
-            v.setCodeMed(visite.getCodeMed());
-            v.setCodePat(visite.getCodePat());
+            v.setCodeMedVisite(visite.getCodeMedVisite());
+            v.setCodePatVisite(visite.getCodePatVisite());
             v.setDateVisite(visite.getDateVisite());
             
             session.save(v);
@@ -40,39 +60,58 @@ public class VisiteManager {
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
+        } finally {
+            session.close();
         }           
     }
     
     public void modifieVisite(Visite visite) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        
+        Transaction transaction = null;
         try {
-            session.beginTransaction();
-            Visite existVisite = session.get(Visite.class, visite.getIdVisite());
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Visite WHERE codeMedVisite =: codeM OR codePatVisite =: codeP");
+            query.setParameter("codeM", visite.getCodeMedVisite());
+            query.setParameter("codeP", visite.getCodePatVisite());
+            Visite existVisite = (Visite) query.uniqueResult();
             
-            existVisite.setCodeMed(visite.getCodeMed());
-            existVisite.setCodePat(visite.getCodePat());
-            existVisite.setDateVisite(visite.getDateVisite());
+            if(existVisite != null) {
+                existVisite.setCodeMedVisite(visite.getCodeMedVisite());
+                existVisite.setCodePatVisite(visite.getCodePatVisite());
+                
+                java.util.Date utilDate = visite.getDateVisite();
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                existVisite.setDateVisite(sqlDate);
             
-            session.update(existVisite);
-            session.getTransaction().commit();
+                session.update(existVisite);
+                transaction.commit();
+            } else {
+                System.err.println("erreur de modification");
+            }
+
         } catch (Exception e) {
-            session.getTransaction().rollback();
+            transaction.rollback();
+        } finally {
+            session.close();
         }
     }
     
-    public void supprimeVisite(int idVisite) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public void supprimeVisite(String codeMedVisite, String codePatVisite) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
         
         try {
-            Visite v = session.get(Visite.class, idVisite);
-            if(v != null) {
-                session.delete(v);
-            }
+            Query query = session.createQuery("DELETE FROM Visite v WHERE v.codeMedVisite = :codeMedVisite OR v.codePatVisite = :codePatVisite");
+            query.setParameter("codeMedVisite", codeMedVisite);
+            query.setParameter("codePatVisite", codePatVisite);
+            int deleted = query.executeUpdate();
+            if(deleted == 0) {
+                JOptionPane.showMessageDialog(null, "aucun medecin supprimer");
+            } 
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
+            JOptionPane.showMessageDialog(null, "erreur de suppression");
         }
     }
 }
