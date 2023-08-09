@@ -612,6 +612,7 @@ public class IFacePatient extends javax.swing.JFrame {
             String codeMed = (String) model.getValueAt(selectedRow, 0);
             MedecinManager medecinManager = new MedecinManager();
             medecinManager.supprimeMedecin(codeMed);
+            JOptionPane.showMessageDialog(null, "Suppression réussie");
             tableauMedecin();
      
         } catch (Exception e) {
@@ -701,13 +702,14 @@ public class IFacePatient extends javax.swing.JFrame {
             String codePat = (String) model.getValueAt(selectedRow, 0);
             PatientManager patientManager = new PatientManager();
             patientManager.supprimePatient(codePat);
+            JOptionPane.showMessageDialog(null, "Suppression réussit");
             tableauPatient();
         } catch (Exception e) {
             System.err.println("err");
         }
     }//GEN-LAST:event_btnSupprimePatientActionPerformed
 
-    /**********************fonction supprimer patient***********************/
+    /**********************fonction modifier patient***********************/
     private void btnModifiePatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifiePatientActionPerformed
         // TODO add your handling code here:
         int selectedRow = TableauPatient.getSelectedRow();
@@ -782,6 +784,7 @@ public class IFacePatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ChampRecherchePatientKeyReleased
 
+    /**********************Séléctionner tableau visite***********************/
     private void TableauVisiteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableauVisiteMouseReleased
         // TODO add your handling code here:
     int i = TableauVisite.getSelectedRow();
@@ -796,22 +799,29 @@ public class IFacePatient extends javax.swing.JFrame {
     ChampDateVisite.setDate(date);
     }//GEN-LAST:event_TableauVisiteMouseReleased
 
+    /**********************fonction ajouter visite***********************/
     private void btnAjoutVisiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjoutVisiteActionPerformed
         // TODO add your handling code here:
-        String codeMedVisite = ChampCodeMedVisite.getText();
-        String codePatVisite = ChampCodePatVisite.getText();
-        Date dateVisite = ChampDateVisite.getDate();
-        
-        Visite visite = new Visite();
-        visite.setCodeMedVisite(codeMedVisite);
-        visite.setCodePatVisite(codePatVisite);
-        visite.setDateVisite(dateVisite);
-        
-        VisiteManager visiteManager = new VisiteManager();
-        visiteManager.ajoutVisite(visite);
-        tableauVisite();
+        if(!ChampCodeMedVisite.getText().equals("") && !ChampCodePatVisite.getText().equals("") && ChampDateVisite.getDate().equals("")) {            
+            String codeMedVisite = ChampCodeMedVisite.getText();
+            String codePatVisite = ChampCodePatVisite.getText();
+            Date dateVisite = ChampDateVisite.getDate();
+
+            Visite visite = new Visite();
+            visite.setCodeMedVisite(codeMedVisite);
+            visite.setCodePatVisite(codePatVisite);
+            visite.setDateVisite(dateVisite);
+
+            VisiteManager visiteManager = new VisiteManager();
+            visiteManager.ajoutVisite(visite);
+            JOptionPane.showMessageDialog(null, "Ajout réussi");
+            tableauVisite();
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez remplir les champs");
+        }
     }//GEN-LAST:event_btnAjoutVisiteActionPerformed
 
+    /**********************fonction modifier visite***********************/
     private void btnModifieVisiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifieVisiteActionPerformed
         // TODO add your handling code here:
         int selectedRow = TableauVisite.getSelectedRow();
@@ -841,6 +851,7 @@ public class IFacePatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModifieVisiteActionPerformed
 
+    /**********************fonction supprimer visite***********************/
     private void btnSupprimeVisiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprimeVisiteActionPerformed
         // TODO add your handling code here:
         int selectedRow = TableauVisite.getSelectedRow();
@@ -862,9 +873,6 @@ public class IFacePatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSupprimeVisiteActionPerformed
 
-    
-    
-    
     /**********************Tableau médecin***********************/
     public void tableauMedecin() {
         MedecinManager medecinManager = new MedecinManager();
